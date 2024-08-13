@@ -1,27 +1,7 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import "gin-gonic-gorm/boostrap"
 
 func main() {
-	app := gin.Default()
-
-	route := app
-
-	route.GET("/", func(ctx *gin.Context) {
-		isValidated := false
-
-		if !isValidated {
-
-			ctx.AbortWithStatusJSON(400, gin.H{
-				"message": "bad request, some field no valid",
-			})
-			return
-		}
-
-		ctx.JSON(200, gin.H{
-			"hello": "world",
-		})
-	})
-
-	app.Run(":8000")
+	boostrap.BoostrapApp()
 }
