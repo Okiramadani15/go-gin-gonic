@@ -1,20 +1,35 @@
 package user_controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"gin-gonic-gorm/database"
+	"gin-gonic-gorm/models"
+
+	"github.com/gin-gonic/gin"
+)
 
 func GetAllUser(ctx *gin.Context) {
 
-	isValidated := true
+	persons := new([]models.User)
 
-	if !isValidated {
+	err := database.DB.Table("person").Find(&persons).Error
 
-		ctx.AbortWithStatusJSON(400, gin.H{
-			"message": "bad request, some field not valid",
+	if err != nil {
+		ctx.AbortWithStatusJSON(500, gin.H{
+			"message": "internal server error",
 		})
-		return
 	}
 
+	// isValidated := true
+
+	// if !isValidated {
+
+	// 	ctx.AbortWithStatusJSON(400, gin.H{
+	// 		"message": "bad request, some field not valid",
+	// 	})
+	// 	return
+	// }
+
 	ctx.JSON(200, gin.H{
-		"hello": " hello user",
+		"data": persons,
 	})
 }
